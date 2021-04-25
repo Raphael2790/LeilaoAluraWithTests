@@ -17,9 +17,20 @@ namespace Alura.LeilaoOnline.WebApp.Servicos.Handlers
             _categoriaRepositorio = categoriaRepositorio;
         }
 
-        public void CadastrarLeilao(Leilao leilao)
+        public ServiceResult CadastrarLeilao(Leilao leilao)
         {
-            _leilaoRepositorio.Incluir(leilao);
+            ServiceResult result = new ServiceResult();
+
+            try
+            {
+                _leilaoRepositorio.Incluir(leilao);
+                return result.SetSuccess();
+            }
+            catch (Exception ex)
+            {
+
+                return result.SetError(ex.Message);
+            }
         }
 
         public IEnumerable<Categoria> ConsultarCategorias()
@@ -37,32 +48,67 @@ namespace Alura.LeilaoOnline.WebApp.Servicos.Handlers
             return _leilaoRepositorio.BuscarTodos();
         }
 
-        public void FinalizarPregaoDoLeilaoPorId(int id)
+        public ServiceResult FinalizarPregaoDoLeilaoPorId(int id)
         {
-            var leilao = _leilaoRepositorio.BuscarPorId(id);
-            if(leilao != null && leilao.Situacao == SituacaoLeilao.Pregao)
+            ServiceResult result = new ServiceResult();
+
+            try
             {
-                leilao.Situacao = SituacaoLeilao.Finalizado;
-                leilao.Termino = DateTime.Now;
-                _leilaoRepositorio.Atualizar(leilao);
+                var leilao = _leilaoRepositorio.BuscarPorId(id);
+                if (leilao != null && leilao.Situacao == SituacaoLeilao.Pregao)
+                {
+                    leilao.Situacao = SituacaoLeilao.Finalizado;
+                    leilao.Termino = DateTime.Now;
+                    _leilaoRepositorio.Atualizar(leilao);
+                }
+
+                return result.SetSuccess();
+            }
+            catch (Exception ex)
+            {
+                return result.SetError(ex.Message);   
+            }
+            
+        }
+
+        public ServiceResult IniciarPregaoDoLeilaoPorId(int id)
+        {
+            ServiceResult result = new ServiceResult();
+            try
+            {
+                var leilao = _leilaoRepositorio.BuscarPorId(id);
+                if (leilao != null && leilao.Situacao == SituacaoLeilao.Rascunho)
+                {
+                    leilao.Situacao = SituacaoLeilao.Pregao;
+                    leilao.Inicio = DateTime.Now;
+                    _leilaoRepositorio.Atualizar(leilao);
+                }
+
+                return result.SetSuccess();
+            }
+            catch (Exception ex)
+            {
+
+                return result.SetError(ex.Message);
             }
         }
 
-        public void IniciarPregaoDoLeilaoPorId(int id)
+        public ServiceResult ModificarLeilao(Leilao leilao)
         {
-            var leilao = _leilaoRepositorio.BuscarPorId(id);
-            if (leilao != null && leilao.Situacao == SituacaoLeilao.Rascunho)
+            ServiceResult result = new ServiceResult();
+            try
             {
-                leilao.Situacao = SituacaoLeilao.Pregao;
-                leilao.Inicio = DateTime.Now;
-                _leilaoRepositorio.Atualizar(leilao);
-            }
-        }
+                if (leilao != null)
+                    _leilaoRepositorio.Atualizar(leilao);
 
-        public void ModificarLeilao(Leilao leilao)
-        {
-            if(leilao != null)
-                _leilaoRepositorio.Atualizar(leilao);
+                return result.SetSuccess();
+            }
+            catch (Exception ex)
+            {
+
+                return result.SetError(ex.Message);
+            }
+           
         }
 
         public ServiceResult RemoverLeilao(Leilao leilao)

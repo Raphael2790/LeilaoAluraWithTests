@@ -7,10 +7,12 @@ namespace Alura.LeilaoOnline.WebApp.Models
     {        
         public int Id { get; set; }
         
-        [Required(ErrorMessage = "Título é obrigatório")] 
+        [Required(ErrorMessage = "Título é obrigatório")]
+        [MinLength(10)]
         [Display(Name = "Título", Prompt = "Digite o título do leilão")]
         public string Titulo { get; set; }
 
+        [Required]
         [Display(Name = "Descrição")]
         public string Descricao { get; set; }
 

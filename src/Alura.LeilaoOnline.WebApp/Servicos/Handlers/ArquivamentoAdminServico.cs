@@ -14,9 +14,20 @@ namespace Alura.LeilaoOnline.WebApp.Servicos.Handlers
         {
             _defaultAdminServico = new DefaultAdminServico(leilaoRepositorio, categoriaRepositorio);
         }
-        public void CadastrarLeilao(Leilao leilao)
+        public ServiceResult CadastrarLeilao(Leilao leilao)
         {
-            _defaultAdminServico.CadastrarLeilao(leilao);
+            ServiceResult result = new ServiceResult();
+
+            try
+            {
+                _defaultAdminServico.CadastrarLeilao(leilao);
+                return result.SetSuccess();
+            }
+            catch (Exception ex)
+            {
+
+                return result.SetError(ex.Message);
+            }
         }
 
         public IEnumerable<Categoria> ConsultarCategorias()
@@ -36,19 +47,51 @@ namespace Alura.LeilaoOnline.WebApp.Servicos.Handlers
                         .ToList();
         }
 
-        public void FinalizarPregaoDoLeilaoPorId(int id)
+        public ServiceResult FinalizarPregaoDoLeilaoPorId(int id)
         {
-            _defaultAdminServico.FinalizarPregaoDoLeilaoPorId(id);
+            ServiceResult result = new ServiceResult();
+
+            try
+            {
+                _defaultAdminServico.FinalizarPregaoDoLeilaoPorId(id);
+                return result.SetSuccess();
+            }
+            catch (Exception ex)
+            {
+
+                return result.SetError(ex.Message);
+            }
         }
 
-        public void IniciarPregaoDoLeilaoPorId(int id)
+        public ServiceResult IniciarPregaoDoLeilaoPorId(int id)
         {
-            _defaultAdminServico.IniciarPregaoDoLeilaoPorId(id);
+            ServiceResult result = new ServiceResult();
+            try
+            {
+                _defaultAdminServico.IniciarPregaoDoLeilaoPorId(id);
+                return result.SetSuccess();
+            }
+            catch (Exception ex)
+            {
+
+                return result.SetError(ex.Message);
+            }
+            
         }
 
-        public void ModificarLeilao(Leilao leilao)
+        public ServiceResult ModificarLeilao(Leilao leilao)
         {
-            _defaultAdminServico.ModificarLeilao(leilao);
+            ServiceResult result = new ServiceResult();
+            try
+            {
+                _defaultAdminServico.ModificarLeilao(leilao);
+                return result.SetSuccess();
+            }
+            catch (Exception ex)
+            {
+                return result.SetError(ex.Message);
+            }
+            
         }
 
         public ServiceResult RemoverLeilao(Leilao leilao)

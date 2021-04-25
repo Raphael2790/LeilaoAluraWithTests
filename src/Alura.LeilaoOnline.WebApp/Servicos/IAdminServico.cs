@@ -11,10 +11,10 @@ namespace Alura.LeilaoOnline.WebApp.Servicos
         IEnumerable<Categoria> ConsultarCategorias();
         IEnumerable<Leilao> ConsultarLeiloes();
         Leilao ConsultarLeilaoPorId(int id);
-        void CadastrarLeilao(Leilao leilao);
-        void ModificarLeilao(Leilao leilao);
+        ServiceResult CadastrarLeilao(Leilao leilao);
+        ServiceResult ModificarLeilao(Leilao leilao);
         ServiceResult RemoverLeilao(Leilao leilao);
-        void IniciarPregaoDoLeilaoPorId(int id);
-        void FinalizarPregaoDoLeilaoPorId(int id);
+        ServiceResult IniciarPregaoDoLeilaoPorId(int id);
+        ServiceResult FinalizarPregaoDoLeilaoPorId(int id);
     }
 }

@@ -34,9 +34,13 @@ namespace Alura.LeilaoOnline.WebApp.Controllers
         [HttpPost]
         public IActionResult Insert(Leilao model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && (!string.IsNullOrEmpty(model.Titulo) || !string.IsNullOrEmpty(model.Descricao)))
             {
-                _servico.CadastrarLeilao(model);
+                var result  = _servico.CadastrarLeilao(model);
+
+                if (!result.Success)
+                    return BadRequest("Houve um erro inesperado,tente mais tarde");
+
                 return RedirectToAction("Index");
             }
             ViewData["Categorias"] = _servico.ConsultarCategorias();
@@ -57,9 +61,13 @@ namespace Alura.LeilaoOnline.WebApp.Controllers
         [HttpPost]
         public IActionResult Edit(Leilao model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && (!string.IsNullOrEmpty(model.Titulo) || !string.IsNullOrEmpty(model.Descricao)))
             {
-                _servico.ModificarLeilao(model);
+                var result = _servico.ModificarLeilao(model);
+
+                if (!result.Success)
+                    return BadRequest("Houve um erro inesperado,tente mais tarde");
+
                 return RedirectToAction("Index");
             }
             ViewData["Categorias"] = _servico.ConsultarCategorias();
@@ -71,9 +79,17 @@ namespace Alura.LeilaoOnline.WebApp.Controllers
         public IActionResult Inicia(int id)
         {
             var leilao = _servico.ConsultarLeilaoPorId(id);
-            if (leilao == null) return NotFound();
-            if (leilao.Situacao != SituacaoLeilao.Rascunho) return StatusCode(405);
-            _servico.IniciarPregaoDoLeilaoPorId(id);
+            if (leilao == null) 
+                return NotFound();
+
+            if (leilao.Situacao != SituacaoLeilao.Rascunho) 
+                return StatusCode(405);
+
+            var result = _servico.IniciarPregaoDoLeilaoPorId(id);
+
+            if (!result.Success)
+                return BadRequest("Houve um erro inesperado");
+
             return RedirectToAction("Index");
         }
 
@@ -82,8 +98,15 @@ namespace Alura.LeilaoOnline.WebApp.Controllers
         {
             var leilao = _servico.ConsultarLeilaoPorId(id);
             if (leilao == null) return NotFound();
-            if (leilao.Situacao != SituacaoLeilao.Pregao) return StatusCode(405);
-            _servico.FinalizarPregaoDoLeilaoPorId(id);
+
+            if (leilao.Situacao != SituacaoLeilao.Pregao) 
+                return StatusCode(405);
+
+            var result = _servico.FinalizarPregaoDoLeilaoPorId(id);
+
+            if (!result.Success) 
+                return BadRequest("Houve um erro inesperado");
+
             return RedirectToAction("Index");
         }
 
