@@ -6,7 +6,7 @@ using Alura.LeilaoOnline.WebApp.Servicos;
 using Alura.LeilaoOnline.WebApp.Models;
 using System;
 
-namespace Alura.LeilaoOnline.Testes
+namespace Alura.LeilaoOnline.Testes.ControllerTests
 {
     public class LeilaoControllerTests
     {
