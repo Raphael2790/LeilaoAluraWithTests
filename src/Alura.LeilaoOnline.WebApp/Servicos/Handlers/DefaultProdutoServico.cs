@@ -26,15 +26,15 @@ namespace Alura.LeilaoOnline.WebApp.Servicos.Handlers
         {
             return _categoriaRepositorio.BuscarTodos()
                         .Select(c => new CategoriaComInfoLeilao
-                        {
-                            Id = c.Id,
-                            Descricao = c.Descricao,
-                            Imagem = c.Imagem,
-                            EmRascunho = c.Leiloes.Where(x => x.Situacao == SituacaoLeilao.Rascunho).Count(),
-                            EmPregao = c.Leiloes.Where(x => x.Situacao == SituacaoLeilao.Pregao).Count(),
-                            Finalizados = c.Leiloes.Where(x => x.Situacao == SituacaoLeilao.Finalizado).Count(),
-                            Leiloes = c.Leiloes
-                        });
+                        (
+                            c.Id,
+                            c.Descricao,
+                            c.Imagem,
+                            c.Leiloes,
+                            c.Leiloes.Where(x => x.Situacao == SituacaoLeilao.Rascunho).Count(),
+                            c.Leiloes.Where(x => x.Situacao == SituacaoLeilao.Pregao).Count(),
+                            c.Leiloes.Where(x => x.Situacao == SituacaoLeilao.Finalizado).Count()
+                        ));
         }
 
         public IEnumerable<Leilao> PesquisarLeiloesEmPregaoPorTermo(string termo)

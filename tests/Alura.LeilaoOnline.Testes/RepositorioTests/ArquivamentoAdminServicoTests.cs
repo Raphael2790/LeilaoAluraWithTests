@@ -5,8 +5,6 @@ using Alura.LeilaoOnline.WebApp.Servicos;
 using Alura.LeilaoOnline.WebApp.Servicos.Handlers;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Alura.LeilaoOnline.Testes.RepositorioTests
@@ -47,6 +45,16 @@ namespace Alura.LeilaoOnline.Testes.RepositorioTests
                 Inicio = DateTime.Now,
                 Situacao = SituacaoLeilao.Rascunho,
                 Titulo = "Carros Usados"
+            },
+            new Leilao
+            {
+                Id = 2,
+                Categoria = new Categoria(2, "Imóveis", "/imagem18227.png"),
+                Descricao = "Imóveis antigos década de 70",
+                IdCategoria = 2,
+                Inicio = DateTime.Now,
+                Situacao = SituacaoLeilao.Rascunho,
+                Titulo = "Imóveis Antigos"
             }
         };
 

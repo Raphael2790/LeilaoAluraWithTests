@@ -8,12 +8,12 @@ namespace Alura.LeilaoOnline.WebApp.Seeding
         Random random;
         Categoria[] categorias = new Categoria[6]
         {
-            new Categoria() { Descricao = "Diversão e Jogos", Imagem = "images/jogos.png" },
-            new Categoria() { Descricao = "Carros Antigos", Imagem = "images/carros.png" },
-            new Categoria() { Descricao = "Obras de Arte", Imagem = "images/artes.png" },
-            new Categoria() { Descricao = "Imóveis", Imagem = "images/imoveis.png" },
-            new Categoria() { Descricao = "Eletrônicos", Imagem = "images/technology.png" },
-            new Categoria() { Descricao = "Itens de Colecionador", Imagem = "images/colecionador.png" },
+            new Categoria(1, "Diversão e Jogos", "images/jogos.png"),
+            new Categoria(2, "Carros Antigos","images/carros.png" ),
+            new Categoria(3 , "Obras de Arte", "images/artes.png"),
+            new Categoria(4,"Imóveis", "images/imoveis.png"),
+            new Categoria(5,"Eletrônicos","images/technology.png" ),
+            new Categoria(6,"Itens de Colecionador", "images/colecionador.png"),
         };
 
         public LeilaoRandomGenerator(Random random)
